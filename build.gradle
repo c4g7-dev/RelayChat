@@ -33,7 +33,7 @@ loom {
 			client()
 			name "Relay self-test"
 			source sourceSets.selftest
-			runDir "run-selftest"
+			runDir project.findProperty("selftest_dir") ?: "run-selftest"
 			programArgs "--quickPlaySingleplayer", "RelayTest", "--width", "1920", "--height", "1080"
 			vmArgs "-Xmx2G"
 		}
@@ -52,10 +52,12 @@ dependencies {
 
 processResources {
 	def version = project.version
+	def minecraftVersion = project.minecraft_version
 	inputs.property "version", version
+	inputs.property "minecraft_version", minecraftVersion
 
 	filesMatching("fabric.mod.json") {
-		expand "version": version
+		expand "version": version, "minecraft_version": minecraftVersion
 	}
 }
 

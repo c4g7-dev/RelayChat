@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://github.com/c4g7-dev/Relay/releases"><img src="https://img.shields.io/github/v/release/c4g7-dev/Relay?style=flat-square&color=5A8CFF&label=release" alt="latest release"></a>
-  <img src="https://img.shields.io/badge/Minecraft-26.2-5A8CFF?style=flat-square" alt="Minecraft 26.2">
+  <img src="https://img.shields.io/badge/Minecraft-26.2%20%7C%2026.3-5A8CFF?style=flat-square" alt="Minecraft 26.2 and 26.3">
   <img src="https://img.shields.io/badge/loader-Fabric-DBD0B4?style=flat-square" alt="Fabric">
   <img src="https://img.shields.io/badge/side-client-6E6E6E?style=flat-square" alt="client-side">
   <a href="https://github.com/c4g7-dev/Relay/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/c4g7-dev/Relay/build.yml?style=flat-square&label=build" alt="build status"></a>
@@ -72,8 +72,8 @@ A pattern that backtracks catastrophically, such as `(?:.*,){12}X`, gives up aft
 
 ## install
 
-1. Install [Fabric Loader](https://fabricmc.net/use/) ≥ 0.19.5 and [Fabric API](https://modrinth.com/mod/fabric-api) for Minecraft 26.2
-2. Drop `relay-<version>.jar` from the [releases](https://github.com/c4g7-dev/Relay/releases) into `mods/`
+1. Install [Fabric Loader](https://fabricmc.net/use/) ≥ 0.19.5 and [Fabric API](https://modrinth.com/mod/fabric-api) for Minecraft 26.2 or 26.3
+2. Drop the jar for your game version from the [releases](https://github.com/c4g7-dev/Relay/releases) into `mods/`: `relay-<version>+26.2.jar` or `relay-<version>+26.3.jar`. Each jar only runs on the version in its name
 
 ### coming from VelvetChat
 
@@ -102,7 +102,8 @@ One behaviour change: VelvetChat's regex *Case sensitive* toggle was inverted (o
 ## build
 
 ```sh
-./gradlew build          # jar in build/libs/
+./gradlew build          # jar for 26.2 in build/libs/
+./gradlew build -Pminecraft_version=26.3 -Pfabric_api_version=0.162.0+26.3   # jar for 26.3
 ./gradlew test           # unit tests: text editing, regex, filters, config import
 ./gradlew runSelftest    # dev client that clicks through the UI and takes screenshots
 ```

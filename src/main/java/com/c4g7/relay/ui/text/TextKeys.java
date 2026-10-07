@@ -1,9 +1,9 @@
 package com.c4g7.relay.ui.text;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.util.StringUtil;
-import org.lwjgl.glfw.GLFW;
 
 /**
  * Maps keyboard input onto a {@link TextBuffer}: arrows with Shift to select and Ctrl to jump words,
@@ -36,7 +36,7 @@ public final class TextKeys {
 			return true;
 		}
 		if (event.hasControlDownWithQuirk() && !event.hasAltDown()) {
-			if (event.key() == GLFW.GLFW_KEY_Z) {
+			if (Shortcuts.is(event, 'z')) {
 				if (shift) {
 					buffer.redo();
 				} else {
@@ -44,18 +44,18 @@ public final class TextKeys {
 				}
 				return true;
 			}
-			if (event.key() == GLFW.GLFW_KEY_Y && !shift) {
+			if (Shortcuts.is(event, 'y') && !shift) {
 				buffer.redo();
 				return true;
 			}
 		}
 		switch (event.key()) {
-			case GLFW.GLFW_KEY_LEFT -> buffer.left(shift, word);
-			case GLFW.GLFW_KEY_RIGHT -> buffer.right(shift, word);
-			case GLFW.GLFW_KEY_HOME -> buffer.home(shift);
-			case GLFW.GLFW_KEY_END -> buffer.end(shift);
-			case GLFW.GLFW_KEY_BACKSPACE -> buffer.backspace(word);
-			case GLFW.GLFW_KEY_DELETE -> buffer.delete(word);
+			case InputConstants.KEY_LEFT -> buffer.left(shift, word);
+			case InputConstants.KEY_RIGHT -> buffer.right(shift, word);
+			case InputConstants.KEY_HOME -> buffer.home(shift);
+			case InputConstants.KEY_END -> buffer.end(shift);
+			case InputConstants.KEY_BACKSPACE -> buffer.backspace(word);
+			case InputConstants.KEY_DELETE -> buffer.delete(word);
 			default -> {
 				return false;
 			}

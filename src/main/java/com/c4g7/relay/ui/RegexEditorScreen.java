@@ -9,10 +9,12 @@ import com.c4g7.relay.filter.FilterMatcher;
 import com.c4g7.relay.filter.RegexSyntax;
 import com.c4g7.relay.ui.text.FieldView;
 import com.c4g7.relay.ui.text.PatternArea;
+import com.c4g7.relay.ui.text.Shortcuts;
 import com.c4g7.relay.ui.text.TextBuffer;
 import com.c4g7.relay.ui.text.TextKeys;
 import com.c4g7.relay.util.Rect;
 import com.c4g7.relay.util.Tr;
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.cursor.CursorTypes;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,6 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import org.jspecify.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 /**
  * A full-screen editor for a filter's include and exclude patterns: syntax colouring, live
@@ -551,20 +552,20 @@ public final class RegexEditorScreen extends Screen {
 	@Override
 	public boolean keyPressed(KeyEvent event) {
 		int key = event.key();
-		if (key == GLFW.GLFW_KEY_ESCAPE) {
+		if (key == InputConstants.KEY_ESCAPE) {
 			this.leave();
 			return true;
 		}
-		if (event.isConfirmation() || key == GLFW.GLFW_KEY_S && event.hasControlDownWithQuirk()) {
+		if (event.isConfirmation() || Shortcuts.is(event, 's') && event.hasControlDownWithQuirk()) {
 			this.save();
 			return true;
 		}
-		if (key == GLFW.GLFW_KEY_TAB) {
+		if (key == InputConstants.KEY_TAB) {
 			this.testFocused = !this.testFocused;
 			return true;
 		}
-		if (!this.testFocused && (key == GLFW.GLFW_KEY_UP || key == GLFW.GLFW_KEY_DOWN)) {
-			this.area().vertical(this.font, key == GLFW.GLFW_KEY_UP ? -1 : 1, event.hasShiftDown());
+		if (!this.testFocused && (key == InputConstants.KEY_UP || key == InputConstants.KEY_DOWN)) {
+			this.area().vertical(this.font, key == InputConstants.KEY_UP ? -1 : 1, event.hasShiftDown());
 			return true;
 		}
 		return TextKeys.handle(this.focusedBuffer(), event) || super.keyPressed(event);

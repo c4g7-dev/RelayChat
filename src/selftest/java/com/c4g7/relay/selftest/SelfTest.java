@@ -9,6 +9,7 @@ import com.c4g7.relay.ui.Frame;
 import com.c4g7.relay.ui.RegexEditorScreen;
 import com.c4g7.relay.ui.Settings;
 import com.c4g7.relay.util.Rect;
+import com.mojang.blaze3d.platform.InputConstants;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.MinecraftServer;
-import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -188,7 +188,7 @@ public final class SelfTest implements ClientModInitializer {
 	}
 
 	private static void click(double x, double y, boolean shift) {
-		screen().mouseClicked(new MouseButtonEvent(x, y, new MouseButtonInfo(0, shift ? GLFW.GLFW_MOD_SHIFT : 0)), false);
+		screen().mouseClicked(new MouseButtonEvent(x, y, new MouseButtonInfo(0, shift ? InputConstants.MOD_SHIFT : 0)), false);
 		screen().mouseReleased(new MouseButtonEvent(x, y, new MouseButtonInfo(0, 0)));
 	}
 
@@ -199,7 +199,15 @@ public final class SelfTest implements ClientModInitializer {
 	}
 
 	private static void key(int key, int modifiers) {
-		screen().keyPressed(new KeyEvent(key, 0, modifiers));
+		key(key, '\0', modifiers);
+	}
+
+	/**
+	 * A key with the letter the keyboard layout gives it. 26.3+ reads Ctrl shortcuts from that
+	 * letter (the event's second field); on 26.2 the field is the unused scancode.
+	 */
+	private static void key(int key, char letter, int modifiers) {
+		screen().keyPressed(new KeyEvent(key, letter, modifiers));
 	}
 
 	private static void type(String text) {
@@ -278,16 +286,16 @@ public final class SelfTest implements ClientModInitializer {
 			int rowY = bounds.y() + 14 + 16 + 3 + 9;
 			click(bounds.right() - 30, rowY, false);
 			type("Main chat");
-			key(GLFW.GLFW_KEY_LEFT, GLFW.GLFW_MOD_CONTROL | GLFW.GLFW_MOD_SHIFT);
+			key(InputConstants.KEY_LEFT, InputConstants.MOD_CONTROL | InputConstants.MOD_SHIFT);
 			this.check("title field is being edited", Settings.isEditing());
 		});
 		this.steps.add(() -> shot("04-text-selection"));
 		this.steps.add(() -> {
-			key(GLFW.GLFW_KEY_A, GLFW.GLFW_MOD_CONTROL);
+			key(InputConstants.KEY_A, 'a', InputConstants.MOD_CONTROL);
 			type("Server");
-			key(GLFW.GLFW_KEY_Z, GLFW.GLFW_MOD_CONTROL);
-			key(GLFW.GLFW_KEY_Y, GLFW.GLFW_MOD_CONTROL);
-			key(GLFW.GLFW_KEY_ENTER, 0);
+			key(InputConstants.KEY_Z, 'z', InputConstants.MOD_CONTROL);
+			key(InputConstants.KEY_Y, 'y', InputConstants.MOD_CONTROL);
+			key(InputConstants.KEY_RETURN, 0);
 			this.check("title committed through select-all, typing, undo and redo", "Server".equals(mainWindow().activeTab().config().name));
 			mainWindow().activeTab().config().name = "";
 			Settings.close(mainWindow());
@@ -306,23 +314,23 @@ public final class SelfTest implements ClientModInitializer {
 		});
 		this.steps.add(() -> {
 			this.check("regex editor is open", screen() instanceof RegexEditorScreen);
-			key(GLFW.GLFW_KEY_TAB, 0);
+			key(InputConstants.KEY_TAB, 0);
 			type("[ℹ] ⌞Conduit⌝ ᐅ Service bedwars-2 (Paper 26.2) is stopping…");
-			key(GLFW.GLFW_KEY_TAB, 0);
-			key(GLFW.GLFW_KEY_HOME, 0);
+			key(InputConstants.KEY_TAB, 0);
+			key(InputConstants.KEY_HOME, 0);
 			for (int i = 0; i < 6; i++) {
-				key(GLFW.GLFW_KEY_RIGHT, GLFW.GLFW_MOD_SHIFT);
+				key(InputConstants.KEY_RIGHT, InputConstants.MOD_SHIFT);
 			}
 		});
 		this.steps.add(() -> shot("06-regex-editor"));
 		this.steps.add(() -> {
-			key(GLFW.GLFW_KEY_END, 0);
+			key(InputConstants.KEY_END, 0);
 			type("(");
 		});
 		this.steps.add(() -> shot("07-regex-error"));
 		this.steps.add(() -> {
-			key(GLFW.GLFW_KEY_BACKSPACE, 0);
-			key(GLFW.GLFW_KEY_ESCAPE, 0);
+			key(InputConstants.KEY_BACKSPACE, 0);
+			key(InputConstants.KEY_ESCAPE, 0);
 			this.check("Esc returns to the chat screen", screen() instanceof ChatScreen);
 			this.check("cancel kept the original pattern", lifecyclesWindow().activeTab().config().filters.getFirst().includeRegex.startsWith("(?is)"));
 		});

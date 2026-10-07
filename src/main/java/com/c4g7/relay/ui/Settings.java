@@ -15,6 +15,7 @@ import com.c4g7.relay.ui.text.TextBuffer;
 import com.c4g7.relay.ui.text.TextKeys;
 import com.c4g7.relay.util.Rect;
 import com.c4g7.relay.util.Tr;
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.cursor.CursorType;
 import com.mojang.blaze3d.platform.cursor.CursorTypes;
 import java.util.ArrayList;
@@ -36,7 +37,6 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.resources.Identifier;
 import org.jspecify.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 /**
  * The settings panel that slides into a chat window's body: tab settings, the filter list, a filter,
@@ -873,11 +873,11 @@ public final class Settings {
 		if (isEditing()) {
 			ChatWindow window = editingWindow;
 			State state = state(window);
-			if (event.key() == GLFW.GLFW_KEY_ESCAPE) {
+			if (event.key() == InputConstants.KEY_ESCAPE) {
 				stopEditing(window, false);
 			} else if (event.isConfirmation()) {
 				stopEditing(window, true);
-			} else if (event.key() == GLFW.GLFW_KEY_TAB) {
+			} else if (event.key() == InputConstants.KEY_TAB) {
 				editNextText(window, event.hasShiftDown());
 			} else {
 				TextKeys.handle(state.field.buffer(), event);
@@ -888,7 +888,7 @@ public final class Settings {
 		for (Entry<ChatWindow, State> entry : STATES.entrySet()) {
 			State state = entry.getValue();
 			if (state.page == Page.COLOR && state.hexField != null) {
-				if (event.key() == GLFW.GLFW_KEY_ESCAPE) {
+				if (event.key() == InputConstants.KEY_ESCAPE) {
 					state.hexField = null;
 				} else if (event.isConfirmation()) {
 					commitHex(state);
@@ -898,7 +898,7 @@ public final class Settings {
 				return true;
 			}
 		}
-		if (event.key() == GLFW.GLFW_KEY_ESCAPE) {
+		if (event.key() == InputConstants.KEY_ESCAPE) {
 			for (Entry<ChatWindow, State> entry : STATES.entrySet()) {
 				if (entry.getValue().page != Page.MESSAGES) {
 					back(entry.getKey());

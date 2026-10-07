@@ -8,7 +8,6 @@ import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
-import org.lwjgl.glfw.GLFW;
 
 /** "Chat settings" key (M by default): opens the chat with the first window's tab settings. */
 public final class RelayKeys {
@@ -19,7 +18,7 @@ public final class RelayKeys {
 
 	static void register() {
 		settings = KeyMappingHelper.registerKeyMapping(
-			new KeyMapping("key.relaychat.settings", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_M, KeyMapping.Category.MISC));
+			new KeyMapping("key.relaychat.settings", InputConstants.KEY_M, KeyMapping.Category.MISC));
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while (settings.consumeClick()) {
 				openSettings(client);

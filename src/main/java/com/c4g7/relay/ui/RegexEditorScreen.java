@@ -76,7 +76,7 @@ public final class RegexEditorScreen extends Screen {
 	private Layout layout;
 
 	private RegexEditorScreen(ChatWindow window, ChatTab tab, FilterConfig filter, boolean include) {
-		super(Component.literal("Relay regex editor"));
+		super(Component.literal("Relay Chat regex editor"));
 		this.window = window;
 		this.tab = tab;
 		this.filter = filter;

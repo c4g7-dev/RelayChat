@@ -241,9 +241,9 @@ public final class SelfTest implements ClientModInitializer {
 			say(player("MVP", ChatFormatting.AQUA, "Steve", "yeah, queue 4v4 in a sec"));
 			say(Component.empty()
 				.append(text("[Tip] ", ChatFormatting.GOLD))
-				.append(text("Relay is open source: ", ChatFormatting.GRAY))
-				.append(Component.literal("github.com/c4g7-dev/Relay").withStyle(style -> style.withColor(ChatFormatting.AQUA).withUnderlined(true)
-					.withClickEvent(new ClickEvent.OpenUrl(URI.create("https://github.com/c4g7-dev/Relay")))
+				.append(text("Relay Chat is open source: ", ChatFormatting.GRAY))
+				.append(Component.literal("github.com/c4g7-dev/RelayChat").withStyle(style -> style.withColor(ChatFormatting.AQUA).withUnderlined(true)
+					.withClickEvent(new ClickEvent.OpenUrl(URI.create("https://github.com/c4g7-dev/RelayChat")))
 					.withHoverEvent(new HoverEvent.ShowText(Component.literal("Open in your browser"))))));
 			for (int i = 0; i < 3; i++) {
 				say(text(BLOCKED, ChatFormatting.RED));

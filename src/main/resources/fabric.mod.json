@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "relaychat",
   "version": "${version}",
-  "name": "Relay",
+  "name": "Relay Chat",
   "description": "Windowed chat for Minecraft: movable, resizable and lockable chat windows with tabs, word and regex filters (with a live regex editor), timestamps, copy-on-right-click, and chat that survives server switches. Client-side.",
   "authors": [
     {
@@ -13,9 +13,9 @@
     }
   ],
   "contact": {
-    "homepage": "https://github.com/c4g7-dev/Relay",
-    "sources": "https://github.com/c4g7-dev/Relay",
-    "issues": "https://github.com/c4g7-dev/Relay/issues"
+    "homepage": "https://github.com/c4g7-dev/RelayChat",
+    "sources": "https://github.com/c4g7-dev/RelayChat",
+    "issues": "https://github.com/c4g7-dev/RelayChat/issues"
   },
   "license": "MIT",
   "icon": "assets/relaychat/icon.png",

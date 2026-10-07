@@ -85,7 +85,7 @@
   "relaychat.settings.play_sound": "Ton abspielen",
   "relaychat.settings.regex_empty": "klicken zum Bearbeiten",
   "relaychat.settings.regex_match": "Regex-Treffer",
-  "relaychat.settings.relay": "Relay-Einstellungen",
+  "relaychat.settings.relay": "Relay-Chat-Einstellungen",
   "relaychat.settings.resizable": "Fenstergröße änderbar",
   "relaychat.settings.restore": "Chat nach Neustart behalten",
   "relaychat.settings.server_divider": "Server-Trennlinie",

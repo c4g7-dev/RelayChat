@@ -254,7 +254,7 @@ public final class Settings {
 				hub().save();
 			}));
 		rows.add(toggle(tr("relaychat.settings.lock_window", "Lock window"), () -> window.config().locked, value -> window.config().locked = value));
-		rows.add(Row.of(tr("relaychat.settings.relay", "Relay settings"), Kind.SUB, () -> "", () -> go(state, Page.RELAY)));
+		rows.add(Row.of(tr("relaychat.settings.relay", "Relay Chat settings"), Kind.SUB, () -> "", () -> go(state, Page.RELAY)));
 		if (!config.isMain()) {
 			rows.add(action(tr("relaychat.settings.delete_tab", "Delete tab"), () -> {
 				close(window);
@@ -404,7 +404,7 @@ public final class Settings {
 			case FILTERS -> tr("relaychat.settings.filters", "Filters");
 			case FILTER -> tr("relaychat.settings.panel.filter", "Chat filter");
 			case COLOR -> state.colorTitle;
-			case RELAY -> tr("relaychat.settings.relay", "Relay settings");
+			case RELAY -> tr("relaychat.settings.relay", "Relay Chat settings");
 		};
 	}
 

@@ -41,6 +41,12 @@
 - **clickable chat**: links, run/suggest-command, copy-to-clipboard and hover tooltips all work inside the windows, and Shift+click inserts a name
 - timestamps, message markers, text shadow, per-tab background colours, combining of identical messages (`(3)`), anti-chat-clear, right-click to copy a message, vanilla's secure-chat indicator
 
+<p align="center">
+  <img src="docs/playing.jpg" alt="Relay Chat while playing: the chat is closed and new messages show in both windows over the world" width="860">
+  <br>
+  <sub>while you play: the chat stays closed, and new messages show up in their windows, then fade out after ten seconds</sub>
+</p>
+
 It looks and feels exactly like VelvetChat, the mod it grew out of: same panels, colours, toggles and animations.
 
 <p align="center">

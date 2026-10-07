@@ -58,6 +58,17 @@ public final class SelfTest implements ClientModInitializer {
 		"time set 4000",
 		"tp @a -1532 124 974 -22 10");
 
+	/** Back in the game for the gameplay shot: creative (so flying keeps the view) with a Bed Wars hotbar. */
+	private static final List<String> PLAYING = List.of(
+		"gamemode creative @a",
+		"item replace entity @a hotbar.0 with minecraft:diamond_sword",
+		"item replace entity @a hotbar.1 with minecraft:bow",
+		"item replace entity @a hotbar.2 with minecraft:red_wool 64",
+		"item replace entity @a hotbar.3 with minecraft:golden_apple 3",
+		"item replace entity @a hotbar.4 with minecraft:ender_pearl 2",
+		"item replace entity @a hotbar.5 with minecraft:tnt 4",
+		"item replace entity @a hotbar.6 with minecraft:fire_charge 8");
+
 	private static final String BLOCKED = "You can't break blocks in the lobby!";
 
 	/** Rendered frames so far, counted by {@link com.c4g7.relay.selftest.mixin.MinecraftMixin}. */
@@ -366,6 +377,32 @@ public final class SelfTest implements ClientModInitializer {
 			this.check("F3+D still clears everything", mainWindow().activeTab().entries().isEmpty());
 			mainWindow().config().locked = false;
 			hub().save();
+		});
+		// Gameplay shot: chat closed, hotbar and held item in view, fresh lines showing in the windows.
+		this.steps.add(() -> {
+			mc().gui.setScreen(null);
+			lifecyclesWindow().config().geometry.height = 90;
+			PLAYING.forEach(SelfTest::command);
+		});
+		this.steps.add(() -> {
+			mc().player.getAbilities().flying = true;
+			mc().player.onUpdateAbilities();
+			mc().player.getInventory().setSelectedSlot(0);
+			// Drop the "game mode updated" line and the recipe toasts the creative switch brings.
+			mc().gui.hud.getChat().clearMessages(false);
+			mc().gui.toastManager().clear();
+			say(conduit("bedwars-3", "is starting…", ChatFormatting.YELLOW));
+			say(Component.empty().append(text("Bed Wars ▸ ", ChatFormatting.GOLD)).append(text("Red's bed was destroyed by Alex!", ChatFormatting.RED)));
+			say(player("MVP", ChatFormatting.AQUA, "Steve", "noo, our bed!"));
+			say(conduit("bedwars-3", "is online!", ChatFormatting.GREEN));
+			say(player("VIP", ChatFormatting.GREEN, "Alex", "gg, two teams left"));
+			say(Component.empty().append(text("Bed Wars ▸ ", ChatFormatting.GOLD)).append(text("+12 coins (Final Kill)", ChatFormatting.YELLOW)));
+		});
+		this.steps.add(() -> {
+			this.check("the windows show new messages with the chat closed",
+				!(screen() instanceof ChatScreen) && hub().windows().stream().allMatch(window -> window.config().visibility.drawnWhile(false)));
+			mc().gui.toastManager().clear();
+			shot("09-playing");
 		});
 		this.steps.add(() -> {
 			LOGGER.info("RELAY-SELFTEST DONE with {} failure(s)", this.failures);
